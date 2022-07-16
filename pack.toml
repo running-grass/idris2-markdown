@@ -1,0 +1,9 @@
+[custom.all.markdown]
+type   = "local"
+path   = "."
+ipkg   = "markdown.ipkg"
+
+[custom.all.markdown-test]
+type   = "local"
+path   = "test"
+ipkg   = "test.ipkg"
