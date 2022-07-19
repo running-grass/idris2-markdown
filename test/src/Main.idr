@@ -4,6 +4,7 @@ import Tester
 import Tester.Runner
 
 import Text.Markdown
+-- import Text.Markdown.Lexer
 
 tests : List Test
 tests = [

@@ -8,7 +8,6 @@ public export
 data MDNode = Heading Int String
             | Paragraph String
 
-
 public export
 Eq MDNode where
   Paragraph s1 == Paragraph s2 = s1 == s2
