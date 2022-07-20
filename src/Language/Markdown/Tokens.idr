@@ -1,4 +1,4 @@
-module Text.Markdown.Tokens
+module Language.Markdown.Tokens
 
 import Text.Lexer
 

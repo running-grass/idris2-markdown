@@ -1,9 +1,9 @@
-module Text.Markdown.Lexer
+module Language.Markdown.Lexer
 
 import Data.Nat
 import Text.Lexer
 
-import Text.Markdown.Tokens
+import Language.Markdown.Tokens
 
 -- ignored : WithBounds MarkdownToken -> Bool
 -- ignored (MkBounded (Tok CTIgnore _) _ _) = True

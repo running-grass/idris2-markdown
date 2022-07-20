@@ -1,4 +1,4 @@
-module Text.Markdown
+module Language.Markdown
 
 import Data.String
 

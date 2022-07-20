@@ -3,7 +3,7 @@ module Main
 import Tester
 import Tester.Runner
 
-import Text.Markdown
+import Language.Markdown
 -- import Text.Markdown.Lexer
 
 tests : List Test

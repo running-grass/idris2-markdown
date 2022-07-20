@@ -18,8 +18,8 @@ depends = base         >= 0.5.1
         , contrib
 
 -- modules to install
-modules  =  Text.Markdown
-            , Text.Markdown.Lexer
+modules  =  Language.Markdown
+            , Language.Markdown.Lexer
 
 -- main file (i.e. file to load at REPL)
 -- main =
