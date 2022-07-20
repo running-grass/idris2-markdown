@@ -19,7 +19,10 @@ depends = base         >= 0.5.1
 
 -- modules to install
 modules  =  Language.Markdown
+            , Language.Markdown.Data
+            , Language.Markdown.Tokens
             , Language.Markdown.Lexer
+            , Language.Markdown.Parser
 
 -- main file (i.e. file to load at REPL)
 -- main =

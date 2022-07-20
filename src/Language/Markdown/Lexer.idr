@@ -20,7 +20,6 @@ markdownTokenMap = toTokenMap [
   (is '*', MKAsterisk),
   (is '_', MKUnderline),
   (is '`', MKBackQuote),
-  (exact "> ", MKAsterisk),
   (any, MKText)
 ]
 

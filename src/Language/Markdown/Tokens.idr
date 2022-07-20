@@ -35,11 +35,12 @@ Show MarkdownTokenKind where
 
 public export
 TokenKind MarkdownTokenKind where
+  TokType MKText = String
   TokType _ = ()
 
   tokValue MKNumberSign _ = ()
   tokValue MKAsterisk _ = ()
-  tokValue MKText _ = ()
+  tokValue MKText s = s
   tokValue MKSpace _ = ()
   tokValue MKBreak _ = ()
   tokValue MKBackQuote _ = ()
