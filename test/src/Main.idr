@@ -10,14 +10,14 @@ import Language.Markdown.Parser
 
 tests : List Test
 tests = [
-    test "测试一级标题" $ assertEq (parse "# 1stheading") (Just $ MDoc ([MHeading 1 "1stheading"]))
-    , test "测试二级标题" $ assertEq (parse "## 2stheading") (Just $ MDoc ([MHeading 2 "2stheading"]))
-    , test "测试三级标题" $ assertEq (parse "### 3stheading") (Just $ MDoc ([MHeading 3 "3stheading"]))
-    , test "测试四级标题" $ assertEq (parse "#### 4stheading") (Just $ MDoc ([MHeading 4 "4stheading"]))
-    , test "测试五级标题" $ assertEq (parse "##### 5stheading") (Just $ MDoc ([MHeading 5 ("5stheading")]))
+    test "测试一级标题" $ assertEq (parse "# 1 stheading") (Just $ MDoc ([MHeading 1 "1 stheading"]))
+    , test "测试二级标题" $ assertEq (parse "## 2 stheading") (Just $ MDoc ([MHeading 2 "2 stheading"]))
+    , test "测试三级标题" $ assertEq (parse "### 3 stheading") (Just $ MDoc ([MHeading 3 "3 stheading"]))
+    , test "测试四级标题" $ assertEq (parse "#### 4 stheading") (Just $ MDoc ([MHeading 4 "4 stheading"]))
+    , test "测试五级标题" $ assertEq (parse "##### 5 stheading") (Just $ MDoc ([MHeading 5 ("5 stheading")]))
 
-    -- , test "测试前空格" $ assertEq (parse " ## 2stheading") (Paragraph " ## 2stheading"]))
-    -- , test "测试后空格" $ assertEq (parse "## 2stheading   ") (Just MDoc([MHeading 2 "2stheading"]))
+    , test "测试后空格" $ assertEq (parse "  ## 2 stheading") (Just $ MDoc [MLine $ [MBare "  ## 2 stheading"]])
+    , test "测试后空格" $ assertEq (parse "## 2 stheading   ") (Just $ MDoc [MHeading 2 "2 stheading   "])
 ]
 
 main : IO ()

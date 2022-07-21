@@ -13,26 +13,52 @@ private
 concat1 : List1 String -> String
 concat1 vals = foldl1 (++) vals
 
+private
+maybeNewline : Grammar state MarkdownToken False ()
+maybeNewline = match MKBreak <|> eof
+
+private
+consBare : Inline -> List Inline -> List Inline
+consBare (MBare xs1) (MBare xs2 :: rest) = MBare (xs1 ++ xs2) :: rest
+consBare x xs = x :: xs
+
+private
+mergeBare : List Inline -> List Inline
+mergeBare = foldr consBare []
+
+fib : List Int -> Int
+fib (x :: y :: xs) = x + y + fib xs
+fib [] = 0
+fib [x] = x
 mutual
   private
   document : Grammar state MarkdownToken True Markdown
   document = do
-    vals <- some (line <|> heading)
+    vals <- some (heading <|> line)
     pure $ MDoc $ forget vals
+
+  textNumberSign : Grammar state MarkdownToken True Inline
+  textNumberSign = pure $ MBare !(match MKNumberSign)
+
+  textSpace : Grammar state MarkdownToken True Inline
+  textSpace = pure $ MBare !(match MKSpace)
 
   private
   heading : Grammar state MarkdownToken True Block
   heading = do
     comps <- some $ match MKNumberSign
     _ <- some $ match MKSpace
-    strs <- some $ match MKText
+    commit
+    strs <- some $ (match MKText <|> match MKSpace)
+    maybeNewline
     pure $ MHeading (cast $ length comps) (concat1 strs)
 
   private
   line : Grammar state MarkdownToken True Block
   line = do 
-          comps <- some inlineComp
-          pure $ MLine $ forget comps
+    comps <- some (inlineComp <|> textNumberSign <|> textSpace)
+    maybeNewline
+    pure $ MLine $ mergeBare $ forget comps
 
 
   private
@@ -41,15 +67,15 @@ mutual
 
   private
   bold : Grammar state MarkdownToken True Inline
-  bold = do match MKAsterisk 
-            match MKAsterisk 
+  bold = do _ <- match MKAsterisk 
+            _ <- match MKAsterisk 
             vals <- some $ match MKText
-            match MKAsterisk
-            match MKAsterisk
+            _ <- match MKAsterisk
+            _ <- match MKAsterisk
             pure $ MBold $ concat1 vals
 
   bare : Grammar state MarkdownToken True Inline
-  bare = do vals <- some $ match MKText
+  bare = do vals <- some $ (match MKText <|> match MKSpace)
             pure $ MBare $ concat1 vals
 
 export
