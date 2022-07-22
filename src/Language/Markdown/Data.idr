@@ -19,7 +19,7 @@ Eq Inline where
   _ == _ = False
 
 public export
-data Block = MLine (List Inline) | MHeading Int String
+data Block = MLine (List Inline) | MHeading Int (List Inline)
 
 public export
 Show Block where

@@ -46,12 +46,12 @@ mutual
   private
   heading : Grammar state MarkdownToken True Block
   heading = do
-    comps <- some $ match MKNumberSign
+    levels <- some $ match MKNumberSign
     _ <- some $ match MKSpace
     commit
-    strs <- some $ (match MKText <|> match MKSpace)
+    inlines <- some inlineComp
     maybeNewline
-    pure $ MHeading (cast $ length comps) (concat1 strs)
+    pure $ MHeading (cast $ length levels) (mergeBare $ forget inlines)
 
   private
   line : Grammar state MarkdownToken True Block
@@ -63,7 +63,7 @@ mutual
 
   private
   inlineComp : Grammar state MarkdownToken True Inline
-  inlineComp = bold <|> bare
+  inlineComp = bold <|> bare <|> textSpace <|> textNumberSign
 
   private
   bold : Grammar state MarkdownToken True Inline
