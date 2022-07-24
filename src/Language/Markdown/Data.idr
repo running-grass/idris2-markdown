@@ -4,6 +4,7 @@ import Data.List
 
 %default total
 
+-- 行内元素
 public export
 data Inline = MBold String | MBare String | MCode String
 
@@ -20,6 +21,7 @@ Eq Inline where
   (MCode x) == (MCode y) =  x == y
   _ == _ = False
 
+-- 块级元素
 public export
 data Block = MLine (List Inline) | MHeading Int (List Inline)
 
@@ -40,7 +42,6 @@ data Markdown = MDoc (List Block)
 public export
 Show Markdown where
   show (MDoc bs) = "MDoc(" ++ show bs ++ ")"  
-
 
 export
 Eq Markdown where

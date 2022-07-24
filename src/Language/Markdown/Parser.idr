@@ -6,7 +6,6 @@ import Data.List
 
 import public Language.Markdown.Tokens
 
-
 %default total
 
 private 
@@ -26,10 +25,6 @@ private
 mergeBare : List Inline -> List Inline
 mergeBare = foldr consBare []
 
-fib : List Int -> Int
-fib (x :: y :: xs) = x + y + fib xs
-fib [] = 0
-fib [x] = x
 mutual
   private
   document : Grammar state MarkdownToken True Markdown

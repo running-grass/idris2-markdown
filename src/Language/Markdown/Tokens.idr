@@ -55,7 +55,6 @@ TokenKind MarkdownTokenKind where
   tokValue MKBackQuote _ = ()
   tokValue MKUnderline _ = ()
 
-
 public export
 MarkdownToken : Type
 MarkdownToken = Token MarkdownTokenKind
