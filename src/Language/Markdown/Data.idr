@@ -5,17 +5,19 @@ import Data.List
 %default total
 
 public export
-data Inline = MBold String | MBare String
+data Inline = MBold String | MBare String | MCode String
 
 public export
 Show Inline where
   show (MBold s) = "MBold(" ++ s ++ ")"
   show (MBare s) = "MBare(" ++ s ++ ")"
+  show (MCode s) = "MCode(" ++ s ++ ")"
 
 export
 Eq Inline where
   (MBold x) == (MBold y) =  x == y
   (MBare x) == (MBare y) =  x == y
+  (MCode x) == (MCode y) =  x == y
   _ == _ = False
 
 public export

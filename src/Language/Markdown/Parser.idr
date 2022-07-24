@@ -63,7 +63,11 @@ mutual
 
   private
   inlineComp : Grammar state MarkdownToken True Inline
-  inlineComp = bold <|> bare <|> textSpace <|> textNumberSign
+  inlineComp = bold <|> bare <|> textSpace <|> textNumberSign <|> code
+
+  private
+  code : Grammar state MarkdownToken True Inline
+  code = pure $ MCode !(match MKCode)
 
   private
   bold : Grammar state MarkdownToken True Inline

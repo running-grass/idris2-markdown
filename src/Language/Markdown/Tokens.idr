@@ -1,6 +1,7 @@
 module Language.Markdown.Tokens
 
 import Text.Lexer
+import Data.String
 
 public export
 data MarkdownTokenKind
@@ -11,6 +12,7 @@ data MarkdownTokenKind
   | MKBreak
   | MKBackQuote
   | MKUnderline
+  | MKCode
 
 public export
 Eq MarkdownTokenKind where
@@ -21,6 +23,7 @@ Eq MarkdownTokenKind where
   (==) MKBreak MKBreak = True
   (==) MKBackQuote MKBackQuote = True
   (==) MKUnderline MKUnderline = True
+  (==) MKCode MKCode = True
   (==) _ _ = False
 
 public export
@@ -32,10 +35,12 @@ Show MarkdownTokenKind where
   show MKBreak = "MKBreak"
   show MKBackQuote = "MKBackQuote"
   show MKUnderline = "MKUnderline"
+  show MKCode = "MKCode"
 
 public export
 TokenKind MarkdownTokenKind where
   TokType MKText = String
+  TokType MKCode = String
   TokType MKSpace = String
   TokType MKAsterisk = String
   TokType MKNumberSign = String
@@ -44,6 +49,7 @@ TokenKind MarkdownTokenKind where
   tokValue MKNumberSign _ = "#"
   tokValue MKAsterisk _ = "*"
   tokValue MKText s = s
+  tokValue MKCode s = strSubstr 1 ((strLength s) - 2) s
   tokValue MKSpace _ = " "
   tokValue MKBreak _ = ()
   tokValue MKBackQuote _ = ()
