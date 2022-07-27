@@ -6,7 +6,7 @@ markdown parse for idris2
 ## 基础语法
 - [x] 标题
 - [x] 粗体
-- [ ] 斜体
+- [x] 斜体
 - [ ] 段落
 - [x] 换行
 - [ ] 粗斜体

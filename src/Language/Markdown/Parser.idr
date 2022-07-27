@@ -54,15 +54,21 @@ mutual
     comps <- some (inlineComp <|> textNumberSign <|> textSpace)
     maybeNewline
     pure $ MLine $ mergeBare $ forget comps
-
-
+  
   private
   inlineComp : Grammar state MarkdownToken True Inline
-  inlineComp = bold <|> bare <|> textSpace <|> textNumberSign <|> code
+  inlineComp = bold <|> bare <|> textSpace <|> textNumberSign <|> code <|> italic
 
   private
   code : Grammar state MarkdownToken True Inline
   code = pure $ MCode !(match MKCode)
+
+  private
+  italic : Grammar state MarkdownToken True Inline
+  italic = do _ <- match MKAsterisk 
+              vals <- some $ match MKText
+              _ <- match MKAsterisk
+              pure $ MItalic $ concat1 vals
 
   private
   bold : Grammar state MarkdownToken True Inline

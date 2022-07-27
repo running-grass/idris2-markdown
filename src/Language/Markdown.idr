@@ -2,10 +2,11 @@ module Language.Markdown
 
 import Data.String
 
-import Language.Markdown.Lexer
-import Language.Markdown.Parser
 import Text.Parser
 
+
+import public Language.Markdown.Lexer
+import public Language.Markdown.Parser
 import public Language.Markdown.Data
 
 public export

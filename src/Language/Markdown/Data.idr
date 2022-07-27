@@ -6,17 +6,19 @@ import Data.List
 
 -- 行内元素
 public export
-data Inline = MBold String | MBare String | MCode String
+data Inline = MBold String | MBare String | MCode String | MItalic String
 
 public export
 Show Inline where
   show (MBold s) = "MBold(" ++ s ++ ")"
+  show (MItalic s) = "MItalic(" ++ s ++ ")"
   show (MBare s) = "MBare(" ++ s ++ ")"
   show (MCode s) = "MCode(" ++ s ++ ")"
 
 export
 Eq Inline where
   (MBold x) == (MBold y) =  x == y
+  (MItalic x) == (MItalic y) =  x == y
   (MBare x) == (MBare y) =  x == y
   (MCode x) == (MCode y) =  x == y
   _ == _ = False
