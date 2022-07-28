@@ -1,32 +1,29 @@
 # idris2-markdown
-markdown parse for idris2  
+A [Markdown](https://www.markdownguide.org/) parser for idris2  
 
-# 进度
+# Stuff still Missing
 
-## 基础语法
-- [x] 标题
-- [x] 粗体
-- [x] 斜体
-- [ ] 段落
-- [x] 换行
-- [ ] 粗斜体
-- [x] 代码
-- [ ] 链接
-- [ ] 块引用
-- [ ] 嵌套块引用
-- [ ] 无序列表
-- [ ] 有序列表
-- [ ] 嵌套列表
-- [ ] 分割线
-- [ ] 图片
-- [ ] 转义字符
+## Basic Syntax
+- [x] Heading
+- [x] Bold
+- [x] Italic
+- [x] Code
+- [ ] Link
+- [ ] Blockquote
+- [ ] Unordered List
+- [ ] Ordered List
+- [ ] Horizontal Rule
+- [ ] Image
 
-## 扩展语法
-- [ ] 内嵌HTML
-- [ ] 表格
-- [ ] 代码块
-- [ ] 脚注
-- [ ] 标题ID
-- [ ] 定义列表
-- [ ] 删除线
-- [ ] 任务列表
+## Extended Syntax
+- [ ] Fenced Code Block
+- [ ] Table
+- [ ] Footnote
+- [ ] Heading ID
+- [ ] Definition List
+- [ ] Strikethrough
+- [ ] Task List
+- [ ] Emoji
+- [ ] Highlight
+- [ ] Subscript
+- [ ] Superscript

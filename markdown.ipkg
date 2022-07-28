@@ -1,53 +1,24 @@
 package markdown
 version = 0.0.1
-authors = "Grass"
--- maintainers =
--- license =
--- brief =
--- readme =
--- homepage =
--- sourceloc =
--- bugtracker =
+authors = "running-grass"
+-- maintainers = ""
+license = "MIT"
+brief = "A markdown parser for idris2"
+readme = "https://github.com/running-grass/idris2-markdown/blob/main/README.md"
+homepage = "https://github.com/running-grass/idris2-markdown"
+sourceloc = "https://github.com/running-grass/idris2-markdown"
+bugtracker = "https://github.com/running-grass/idris2-markdown/issues"
 
--- the Idris2 version required (e.g. langversion >= 0.5.1)
--- langversion
+langversion >= 0.5.1 && < 1.0.0
 
--- packages to add to search path
--- depends =
 depends = base         >= 0.5.1
         , contrib
 
--- modules to install
 modules  =  Language.Markdown
             , Language.Markdown.Data
             , Language.Markdown.Tokens
             , Language.Markdown.Lexer
             , Language.Markdown.Parser
 
--- main file (i.e. file to load at REPL)
--- main =
 
--- name of executable
--- executable =
--- opts =
 sourcedir = "src"
--- builddir =
--- outputdir =
-
--- script to run before building
--- prebuild =
-
--- script to run after building
--- postbuild =
-
--- script to run after building, before installing
--- preinstall =
-
--- script to run after installing
--- postinstall =
-
--- script to run before cleaning
--- preclean =
-
--- script to run after cleaning
--- postclean =
