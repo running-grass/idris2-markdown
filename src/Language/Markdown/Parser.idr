@@ -51,17 +51,21 @@ mutual
   private
   line : Grammar state MarkdownToken True Block
   line = do 
-    comps <- some (inlineComp <|> textNumberSign <|> textSpace)
+    comps <- some inlineComp
     maybeNewline
     pure $ MLine $ mergeBare $ forget comps
   
   private
   inlineComp : Grammar state MarkdownToken True Inline
-  inlineComp = bold <|> bare <|> textSpace <|> textNumberSign <|> code <|> italic
+  inlineComp = code <|> bold <|> textSpace <|> textNumberSign <|> italic <|> bare
 
   private
   code : Grammar state MarkdownToken True Inline
-  code = pure $ MCode !(match MKCode)
+  code = do 
+    _ <- match MKBackQuote
+    vals <- some $ match MKText <|> match MKAsterisk <|> match MKNumberSign <|> match MKSpace
+    _ <- match MKBackQuote
+    pure $ MCode $ concat1 vals
 
   private
   italic : Grammar state MarkdownToken True Inline

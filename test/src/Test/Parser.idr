@@ -27,7 +27,7 @@ testHeading = [
     , test "测试后空格" $ assertBlocks "  ## 2 stheading" [MLine $ [MBare "  ## 2 stheading"]]
     , test "测试后空格" $ assertBlocks "## 2 stheading   " [MHeading 2 [MBare "2 stheading   "]]
     , test "测试标题中的多余的#" $ assertBlocks "## I am ###" [MHeading 2 [MBare "I am ###"]]
-
+    , test "测试标题匹配失败" $ assertBlocks "##2 stheading" [MLine [MBare "##2 stheading"]]
 ]
 
 -- 测试粗体的解析
@@ -35,6 +35,9 @@ private
 testBold : List Test
 testBold = [
     test "测试普通粗体" $ assertBlocks "**bold**" [MLine [MBold "bold"]]
+    , test "测试粗体失败" $ assertBlocks "**bold" [MLine [MBare "**bold"]]
+    , test "测试粗体失败1" $ assertBlocks "**bold" [MLine [MBare "**bold*"]]
+    , test "测试粗体失败2" $ assertBlocks "**bold" [MLine [MBare "*bold**"]]
     , test "测试多个粗体" $ assertBlocks "**bold** normal **bold** " [MLine [MBold "bold",MBare " normal ",MBold "bold", MBare " "]]
     , test "测试标题中的粗体" $ assertBlocks "## I am **BOLD**" [MHeading 2 [MBare "I am ", MBold "BOLD"]]
 ]
@@ -44,6 +47,7 @@ private
 testCode : List Test
 testCode = [
     test "测试单独代码" $ assertBlocks "`code`" [MLine [MCode "code"]]
+    , test "测试代码匹配失败" $ assertBlocks "no`code" [MLine [MBare "no`code"]]
     , test "测试多个代码" $ assertBlocks "我有个`code`，还有个`code2`" [MLine [MBare"我有个", MCode "code", MBare "，还有个", MCode "code2"]]
     , test "测试标题中的代码" $ assertBlocks "## 标题中有个`code`" [MHeading 2 [MBare"标题中有个", MCode "code"]]
     , test "测试代码中的特殊字符" $ assertBlocks "`## ** code ** ## $$`" [MLine [MCode "## ** code ** ## $$"]]
@@ -54,6 +58,9 @@ private
 testItalic : List Test
 testItalic = [
     test "测试简单斜体" $ assertLine "*italic*" [MItalic "italic"]
+    , test "测试失败斜体1" $ assertLine "*italic" [MBare "*italic"]
+    , test "测试失败斜体2" $ assertLine "italic*" [MBare "italic*"]
+    , test "测试失败斜体3" $ assertLine "ita*lic" [MBare "ita*lic"]
     , test "测试连续斜体" $ assertLine "*italic**it2*" [MItalic "italic", MItalic "it2"]
     , test "测试连续斜体2" $ assertLine "*italic* *it2*" [MItalic "italic", MBare " ", MItalic "it2"]
     , test "测试粗体斜体" $ assertLine "**bold***italic* *it2*" [MBold "bold", MItalic "italic", MBare " ", MItalic "it2"]

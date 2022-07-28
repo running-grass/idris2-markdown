@@ -47,7 +47,9 @@ TokenKind MarkdownTokenKind where
   TokType MKItalic = String
   TokType MKSpace = String
   TokType MKAsterisk = String
+  TokType MKBackQuote = String
   TokType MKNumberSign = String
+  TokType MKUnderline = String
   TokType _ = ()
 
   tokValue MKNumberSign _ = "#"
@@ -57,8 +59,8 @@ TokenKind MarkdownTokenKind where
   tokValue MKItalic s = strSubstr 1 ((strLength s) - 2) s
   tokValue MKSpace _ = " "
   tokValue MKBreak _ = ()
-  tokValue MKBackQuote _ = ()
-  tokValue MKUnderline _ = ()
+  tokValue MKBackQuote _ = "`"
+  tokValue MKUnderline _ = "_"
 
 public export
 MarkdownToken : Type
