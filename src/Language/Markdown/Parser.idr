@@ -25,6 +25,11 @@ private
 mergeBare : List Inline -> List Inline
 mergeBare = foldr consBare []
 
+private
+isT : Token MarkdownTokenKind -> Bool
+isT (Tok MKAsterisk _) = True
+isT _ = True
+
 mutual
   private
   document : Grammar state MarkdownToken True Markdown
@@ -57,7 +62,11 @@ mutual
   
   private
   inlineComp : Grammar state MarkdownToken True Inline
-  inlineComp = code <|> bold <|> textSpace <|> textNumberSign <|> italic <|> bare
+  inlineComp = code <|> codeFail 
+            <|> bold <|> boldFail
+            <|> italic <|> italicFail 
+            <|> textSpace <|> textNumberSign 
+            <|> bare
 
   private
   code : Grammar state MarkdownToken True Inline
@@ -68,11 +77,23 @@ mutual
     pure $ MCode $ concat1 vals
 
   private
+  codeFail : Grammar state MarkdownToken True Inline
+  codeFail = do
+    _ <- match MKBackQuote
+    pure $ MBare "`"
+
+  private
   italic : Grammar state MarkdownToken True Inline
   italic = do _ <- match MKAsterisk 
               vals <- some $ match MKText
               _ <- match MKAsterisk
+              -- _ <- (eof <|> (nextIs "lala" isT))
               pure $ MItalic $ concat1 vals
+  private
+  italicFail : Grammar state MarkdownToken True Inline
+  italicFail = do
+    _ <- match MKAsterisk
+    pure $ MBare "*"
 
   private
   bold : Grammar state MarkdownToken True Inline
@@ -82,6 +103,13 @@ mutual
             _ <- match MKAsterisk
             _ <- match MKAsterisk
             pure $ MBold $ concat1 vals
+  
+  private
+  boldFail : Grammar state MarkdownToken True Inline
+  boldFail = do
+    _ <- match MKAsterisk
+    _ <- match MKAsterisk
+    pure $ MBare "**"
 
   bare : Grammar state MarkdownToken True Inline
   bare = do vals <- some $ (match MKText <|> match MKSpace)

@@ -36,8 +36,8 @@ testBold : List Test
 testBold = [
     test "测试普通粗体" $ assertBlocks "**bold**" [MLine [MBold "bold"]]
     , test "测试粗体失败" $ assertBlocks "**bold" [MLine [MBare "**bold"]]
-    , test "测试粗体失败1" $ assertBlocks "**bold" [MLine [MBare "**bold*"]]
-    , test "测试粗体失败2" $ assertBlocks "**bold" [MLine [MBare "*bold**"]]
+    , test "测试粗体失败1" $ assertBlocks "**bold*" [MLine [MBare "**bold*"]]
+    , test "测试粗体失败2" $ assertBlocks "*bold**" [MLine [MItalic "bold", MBare("*")]]
     , test "测试多个粗体" $ assertBlocks "**bold** normal **bold** " [MLine [MBold "bold",MBare " normal ",MBold "bold", MBare " "]]
     , test "测试标题中的粗体" $ assertBlocks "## I am **BOLD**" [MHeading 2 [MBare "I am ", MBold "BOLD"]]
 ]
