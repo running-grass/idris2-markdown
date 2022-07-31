@@ -6,7 +6,7 @@ import Data.List
 
 -- 行内元素
 public export
-data Inline = MBold String | MBare String | MCode String | MItalic String
+data Inline = MBold String | MBare String | MCode String | MItalic String 
 
 public export
 Show Inline where
@@ -25,17 +25,21 @@ Eq Inline where
 
 -- 块级元素
 public export
-data Block = MLine (List Inline) | MHeading Int (List Inline)
+data Block = MLine (List Inline) | MHeading Int (List Inline) | MHorizontal | MSpaceLine
 
 public export
 Show Block where
   show (MLine s) = "MLine(" ++ show s ++ ")"
   show (MHeading n s) = "MHeading " ++ show n ++ " (" ++ show s ++ ")"
+  show MHorizontal = "MHorizontal"
+  show MSpaceLine = "MSpaceLine"
 
 export
 Eq Block where
   (MLine x) == (MLine y) =  x == y
   (MHeading s x) == (MHeading t y) =  s == t && x == y 
+  MHorizontal == MHorizontal = True
+  MSpaceLine == MSpaceLine = True
   _ == _ = False
 
 public export

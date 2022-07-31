@@ -12,7 +12,7 @@ A [Markdown](https://www.markdownguide.org/) parser for idris2
 - [ ] Blockquote
 - [ ] Unordered List
 - [ ] Ordered List
-- [ ] Horizontal Rule
+- [x] Horizontal Rule
 - [ ] Image
 
 ## Extended Syntax

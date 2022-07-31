@@ -50,11 +50,12 @@ markdownTokenMap : TokenMap MarkdownToken
 markdownTokenMap = toTokenMap [
   (multNewLine,  MKBreak),
   (spaceLineBreak,  MKBreak),
-  -- (code, MKCode),
+  (newline,  MKSoftBreak),
   (is ' ', MKSpace),
   (is '#', MKNumberSign),
   (is '*', MKAsterisk),
   (is '_', MKUnderline),
+  (is '-', MKDash),
   (is '`', MKBackQuote),
   (any, MKText)
 ]

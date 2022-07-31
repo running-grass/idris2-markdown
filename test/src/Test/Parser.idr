@@ -67,9 +67,23 @@ testItalic = [
     , test "测试标题中斜体" $ assertBlocks "## 我是*斜体*" [MHeading 2 [MBare "我是", MItalic "斜体"]]
 ]
 
+-- 测试行内代码
+private
+testHor : List Test
+testHor = [
+    test "测试水平线" $ assertBlocks "---" [MHorizontal]
+    , test "测试水平线加空格" $ assertBlocks "---     " [MHorizontal]
+    , test "测试水平线加后空行" $ assertBlocks "---\n" [MHorizontal]
+    , test "测试水平线加前软换行" $ assertBlocks "\n---" [MLine [MBare " ---"]]
+    , test "测试水平线加前硬换行" $ assertBlocks "\n\n---" [MSpaceLine, MHorizontal]
+    , test "测试水平线加前空格" $ assertBlocks "  ---" [MHorizontal]
+    , test "测试水平线多加-" $ assertBlocks "-------  " [MHorizontal]
+    , test "测试水平线加后字符" $ assertBlocks "---abcd" [MLine [MBare "---abcd"]]
+]
+
 export 
 testParser : List Test
-testParser = testHeading ++ testBold ++ testCode ++ testItalic
+testParser = testHeading ++ testBold ++ testCode ++ testItalic ++ testHor
 
 
 private

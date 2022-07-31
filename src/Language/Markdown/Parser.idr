@@ -3,6 +3,8 @@ module Language.Markdown.Parser
 import Language.Markdown.Data
 import Text.Parser
 import Data.List
+import Data.Nat
+
 
 import public Language.Markdown.Tokens
 
@@ -26,22 +28,38 @@ mergeBare : List Inline -> List Inline
 mergeBare = foldr consBare []
 
 private
-isT : Token MarkdownTokenKind -> Bool
-isT (Tok MKAsterisk _) = True
-isT _ = True
+softbreak : Grammar state MarkdownToken True String
+softbreak = do
+  match MKSoftBreak
+  pure " "
+
+-- 水平线
+private
+horizontal : Grammar state MarkdownToken (isSucc (min (atLeast 3)) || Delay True) Block
+horizontal = do
+  _ <- many $ match MKSpace
+  _ <- count (atLeast 3) $ match MKDash
+  _ <- many $ match MKSpace
+  maybeNewline <|> match MKSoftBreak
+  pure $ MHorizontal
+
+spaceLine : Grammar state MarkdownToken True Block
+spaceLine = do 
+  _ <- some $ match MKBreak
+  pure $ MSpaceLine
 
 mutual
   private
   document : Grammar state MarkdownToken True Markdown
   document = do
-    vals <- some (heading <|> line)
+    vals <- some (heading <|> horizontal <|> line <|> spaceLine)
     pure $ MDoc $ forget vals
 
   textNumberSign : Grammar state MarkdownToken True Inline
   textNumberSign = pure $ MBare !(match MKNumberSign)
 
   textSpace : Grammar state MarkdownToken True Inline
-  textSpace = pure $ MBare !(match MKSpace)
+  textSpace = pure $ MBare !(match MKSpace <|> softbreak)
 
   private
   heading : Grammar state MarkdownToken True Block
@@ -112,7 +130,7 @@ mutual
     pure $ MBare "**"
 
   bare : Grammar state MarkdownToken True Inline
-  bare = do vals <- some $ (match MKText <|> match MKSpace)
+  bare = do vals <- some $ (match MKText <|> match MKSpace <|> match MKDash)
             pure $ MBare $ concat1 vals
 
 export

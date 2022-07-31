@@ -10,10 +10,10 @@ data MarkdownTokenKind
   | MKText
   | MKSpace
   | MKBreak
+  | MKSoftBreak
   | MKBackQuote
   | MKUnderline
-  | MKCode
-  | MKItalic
+  | MKDash
 
 public export
 Eq MarkdownTokenKind where
@@ -22,10 +22,10 @@ Eq MarkdownTokenKind where
   (==) MKText MKText = True
   (==) MKSpace MKSpace = True
   (==) MKBreak MKBreak = True
+  (==) MKSoftBreak MKSoftBreak = True
   (==) MKBackQuote MKBackQuote = True
   (==) MKUnderline MKUnderline = True
-  (==) MKCode MKCode = True
-  (==) MKItalic MKItalic = True
+  (==) MKDash MKDash = True
   (==) _ _ = False
 
 public export
@@ -35,16 +35,15 @@ Show MarkdownTokenKind where
   show MKText = "MKText"
   show MKSpace = "MKSpace"
   show MKBreak = "MKBreak"
+  show MKSoftBreak = "MKSoftBreak"
   show MKBackQuote = "MKBackQuote"
   show MKUnderline = "MKUnderline"
-  show MKCode = "MKCode"
-  show MKItalic = "MKCode"
+  show MKDash = "MKDash"
 
 public export
 TokenKind MarkdownTokenKind where
   TokType MKText = String
-  TokType MKCode = String
-  TokType MKItalic = String
+  TokType MKDash = String
   TokType MKSpace = String
   TokType MKAsterisk = String
   TokType MKBackQuote = String
@@ -55,10 +54,10 @@ TokenKind MarkdownTokenKind where
   tokValue MKNumberSign _ = "#"
   tokValue MKAsterisk _ = "*"
   tokValue MKText s = s
-  tokValue MKCode s = strSubstr 1 ((strLength s) - 2) s
-  tokValue MKItalic s = strSubstr 1 ((strLength s) - 2) s
+  tokValue MKDash _ = "-"
   tokValue MKSpace _ = " "
   tokValue MKBreak _ = ()
+  tokValue MKSoftBreak _ = ()
   tokValue MKBackQuote _ = "`"
   tokValue MKUnderline _ = "_"
 
